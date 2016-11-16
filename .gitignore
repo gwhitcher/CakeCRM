@@ -1,0 +1,7 @@
+/vendor/*
+/config/app.php
+/tmp/*
+/logs/*
+/.idea/*
+/config/cakecrm-config.php
+

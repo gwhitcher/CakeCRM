@@ -1,0 +1,48 @@
+/* Custom Styles */
+
+/* BODY */
+body {
+    padding-top: 50px;
+}
+
+/* Flash Message */
+.alert {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 9999;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+/* File Upload button for bootstrap 3 */
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/* Text Area Height */
+#body {
+    min-height: 500px;
+}
+
+.cog-list {
+    font-size: 30px;
+    margin-top: 30px;
+}
