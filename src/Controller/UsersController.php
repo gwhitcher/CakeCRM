@@ -11,14 +11,13 @@ use Cake\Auth\DefaultPasswordHasher;
 class UsersController extends AppController
 {
 
-    public function beforeFilter(Event $event)
-    {
+    public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
     }
 
-    public function login()
-    {
+    public function login() {
         $this->set('title_for_layout', 'Login');
+
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -46,8 +45,7 @@ class UsersController extends AppController
         $this->set('users', $this->User->find('all'));
     }
 
-    public function logout()
-    {
+    public function logout() {
         $this->Flash->set('Successfully logged out.',
             ['element' => 'alert-box',
                 'params' => [
@@ -57,8 +55,7 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function view($id)
-    {
+    public function view($id) {
         if (!$id) {
             throw new NotFoundException(__('Invalid user'));
         }
@@ -67,8 +64,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
-    public function add()
-    {
+    public function add() {
         $user = $this->Users->newEntity($this->request->data);
         if ($this->request->is('post')) {
             //Password hash

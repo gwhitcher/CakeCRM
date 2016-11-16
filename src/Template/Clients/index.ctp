@@ -15,6 +15,7 @@
         <tr>
             <th>#</th>
             <th>Title</th>
+            <th>View</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
