@@ -6,12 +6,14 @@ use Cake\Datasource\ConnectionManager;
 class UpdateController extends AppController
 {
 
-    public function index()
-    {
+    public function index() {
+        $base_dir = str_replace("webroot", "", getcwd());
+
         $zip_url = 'https://github.com/gwhitcher/cakecrm/archive/'; //Url to zip
         $zip_name = 'master.zip'; //Zip filename
-        $zip_dir = BASE_DIR.'/webroot/'.$zip_name;
-        $src_dir = BASE_DIR.'/cakecrm-updates'; //Directory for update files
+        $zip_folder = 'CakeCRM-master';
+        $zip_dir = $base_dir.'/webroot/'.$zip_name;
+        $src_dir = $base_dir.'/.cakecrm'; //Directory for update files
 
         //Make dir if it doesn't exist already
         if (!file_exists($src_dir)) {
@@ -37,8 +39,8 @@ class UpdateController extends AppController
         }
 
         unlink($zip_dir); //Delete zip
-        $this->recursive_copy($src_dir.'/CakeCRM-master/',BASE_DIR); //Copy files
-        $this->recursive_delete($src_dir.'/CakeCRM-master'); //Delete files
+        $this->recursive_copy($src_dir.'/'.$zip_folder.'/',$base_dir); //Copy files
+        $this->recursive_delete($src_dir.'/'.$zip_folder); //Delete files
 
         //Mysql update
         $this->mysql_update();
@@ -85,7 +87,8 @@ class UpdateController extends AppController
 
     public function mysql_update() {
         $conn = ConnectionManager::get('default');
-        $mysql_dir = BASE_DIR.'/cakecrm-updates/mysql'; //DESTINATION TO MYSQL UPDATE FILES
+        $base_dir = str_replace("webroot", "", getcwd());
+        $mysql_dir = $base_dir.'/.cakecrm/mysql'; //DESTINATION TO MYSQL UPDATE FILES
         if (!file_exists($mysql_dir)) {
             mkdir($mysql_dir, 0777, true);
         }

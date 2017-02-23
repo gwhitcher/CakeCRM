@@ -1,10 +1,6 @@
-<h1 class="page-header">Edit Invoice</h1>
+<h1 class="page-header">Edit Invoice for <?php echo $client->title; ?></h1>
 <?php
 echo $this->Form->create($invoice);
-
-echo '<div class="form-group">';
-echo $this->Form->input('client_id', array('class' => 'form-control', 'type' => 'select', 'options' => $client_ids, 'empty' => '(choose one)', 'label' => 'Client'));
-echo '</div>';
 
 echo '<div class="form-group">';
 echo $this->Form->input('notes', array('class' => 'form-control', 'type' => 'textarea'));

@@ -3,10 +3,6 @@
 echo $this->Form->create($invoiceitem);
 
 echo '<div class="form-group">';
-echo $this->Form->input('invoice_id', array('class' => 'form-control', 'type' => 'hidden', 'value' => $_POST['invoice_id']));
-echo '</div>';
-
-echo '<div class="form-group">';
 echo $this->Form->input('time_billed', array('class' => 'form-control', 'type' => 'text', 'label' => 'Time Billed (hourly)'));
 echo '</div>';
 

@@ -31,14 +31,15 @@ class InvoiceitemsController extends AppController {
                             'class' => 'success'
                         ]]
                 );
-                return $this->redirect($this->referer());
+                $this->redirect(['controller' => 'Invoices', 'action' => 'view', $invoiceitem['invoice_id']]);
+            } else {
+                $this->Flash->set('Unable to add invoice item.',
+                    ['element' => 'alert-box',
+                        'params' => [
+                            'class' => 'danger'
+                        ]]
+                );
             }
-            $this->Flash->set('Unable to add invoice item.',
-                ['element' => 'alert-box',
-                    'params' => [
-                        'class' => 'danger'
-                    ]]
-            );
         }
         $this->set(compact('invoiceitem'));
     }
@@ -46,7 +47,7 @@ class InvoiceitemsController extends AppController {
     public function edit($id = NULL) {
         $this->loadModel('InvoiceItems');
         $invoiceitem = $this->InvoiceItems->get($id);
-        $this->set('title_for_layout', $invoiceitem->id);
+        $this->set('title_for_layout', 'Invoice Item #'.$invoiceitem->id);
         if (empty($invoiceitem)) {
             throw new NotFoundException('Could not find that invoice item.');
         }
@@ -64,14 +65,15 @@ class InvoiceitemsController extends AppController {
                             'class' => 'success'
                         ]]
                 );
-                return $this->redirect($this->referer());
+                $this->redirect(['controller' => 'Invoices', 'action' => 'view', $invoiceitem->invoice_id]);
+            } else {
+                $this->Flash->set('Unable to update invoice item.',
+                    ['element' => 'alert-box',
+                        'params' => [
+                            'class' => 'danger'
+                        ]]
+                );
             }
-            $this->Flash->set('Unable to update invoice item.',
-                ['element' => 'alert-box',
-                    'params' => [
-                        'class' => 'danger'
-                    ]]
-            );
         }
     }
 

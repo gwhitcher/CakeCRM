@@ -15,43 +15,43 @@ class InvoicesController extends AppController {
         $this->set('invoices', $this->Invoices->find('all')->contain(['clients'])->order(['Invoices.id' => 'DESC']));
     }
 
-    public function add() {
+    public function add($client_id = NULL) {
         $this->set('title_for_layout', 'Add Invoice');
 
-        //Load clients
+        if (empty($client_id)) {
+            throw new NotFoundException('A client ID is required.');
+        }
         $this->loadModel('Clients');
-        $client_ids = $this->Clients->find('list');
-        $this->set(compact('client_ids'));
+        $client = $this->Clients->get($client_id);
+        $this->set('client', $client);
 
         $this->loadModel('Invoices');
         $invoice = $this->Invoices->newEntity($this->request->data);
         if ($this->request->is('post')) {
             $invoice->i_date = date("Y-m-d H:i:s");
+            $invoice->client_id = $client_id;
             if ($this->Invoices->save($invoice)) {
+                $invoice_id = $invoice->id;
                 $this->Flash->set('The invoice has been saved.',
                     ['element' => 'alert-box',
                         'params' => [
                             'class' => 'success'
                         ]]
                 );
-                return $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'view', $invoice_id]);
+            } else {
+                $this->Flash->set('Unable to add invoice.',
+                    ['element' => 'alert-box',
+                        'params' => [
+                            'class' => 'danger'
+                        ]]
+                );
             }
-            $this->Flash->set('Unable to add invoice.',
-                ['element' => 'alert-box',
-                    'params' => [
-                        'class' => 'danger'
-                    ]]
-            );
         }
         $this->set(compact('invoice'));
     }
 
     public function edit($id = NULL) {
-        //Load clients
-        $this->loadModel('Clients');
-        $client_ids = $this->Clients->find('list');
-        $this->set(compact('client_ids'));
-
         $this->loadModel('Invoices');
         $invoice = $this->Invoices->get($id);
         $this->set('title_for_layout', 'Invoice #:'.$invoice->id);
@@ -60,10 +60,14 @@ class InvoicesController extends AppController {
         }
         else {
             $this->set(compact('invoice'));
+            $this->loadModel('Clients');
+            $client = $this->Clients->get($invoice->client_id);
+            $this->set('client', $client);
         }
 
         if ($this->request->is(['post', 'put'])) {
             //Save
+            $invoice->client_id = $client->id;
             $this->Invoices->patchEntity($invoice, $this->request->data);
             if ($this->Invoices->save($invoice)) {
                 $this->Flash->set('The invoice has been updated.',
@@ -72,7 +76,7 @@ class InvoicesController extends AppController {
                             'class' => 'success'
                         ]]
                 );
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $invoice->id]);
             }
             $this->Flash->set('Unable to update invoice.',
                 ['element' => 'alert-box',
@@ -176,7 +180,8 @@ class InvoicesController extends AppController {
 
         $display = '<div style="width: 800px; margin: 0 auto; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px;">';
 
-        $display .= '<h1>Invoice #'.$invoice['id'].' for '.$client['title'].'</h1>';
+        $display .= '<div style="width: 400px; float: left;"><h1>'.$client['title'].'</h1></div>';
+        $display .= '<div style="width: 400px; float: right; text-align: right;"><h1>Invoice #'.$invoice['id'].'</h1></div>';
 
         //Information
         $display .= '<table border="0" cellspacing="2" cellpadding="2" width="100%">';
@@ -198,14 +203,16 @@ class InvoicesController extends AppController {
         $display .= '</thead>';
         $display .= '<tbody>';
         $total_array = array();
+        $invoice_id = 1;
         foreach($invoiceitems as $invoiceitem) {
             $total_array[] = $invoiceitem['time_billed'] * $invoiceitem['time_rate'];
             $display .= '<tr>';
-            $display .= '<td valign="top">'.$invoiceitem['id'].'</td>';
-            $display .= '<td valign="top">'.$invoiceitem['body'].'</td>';
+            $display .= '<td valign="top">'.$invoice_id.'</td>';
+            $display .= '<td valign="top">'.nl2br($invoiceitem['body']).'</td>';
             $display .= '<td valign="top" align="center">'.$invoiceitem['time_billed'].'</td>';
             $display .= '<td valign="top" align="center">$'.$invoiceitem['time_rate'].'</td>';
             $display .= '</tr>';
+            $invoice_id++;
         }
         $total = 0;
         foreach($total_array as $total_item) {

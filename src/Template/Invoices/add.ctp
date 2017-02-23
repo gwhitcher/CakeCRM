@@ -1,10 +1,6 @@
-<h1 class="page-header">Add Invoice</h1>
+<h1 class="page-header">Add Invoice for <?php echo $client->title; ?></h1>
 <?php
 echo $this->Form->create($invoice);
-
-echo '<div class="form-group">';
-echo $this->Form->input('client_id', array('class' => 'form-control', 'type' => 'select', 'options' => $client_ids, 'default' => $_GET['client_id'], 'empty' => '(choose one)', 'label' => 'Client'));
-echo '</div>';
 
 echo '<div class="form-group">';
 echo $this->Form->input('notes', array('class' => 'form-control', 'type' => 'textarea'));

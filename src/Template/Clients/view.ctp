@@ -5,13 +5,21 @@
     <div class="col-md-2 cog-list">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="<?php echo BASE_URL; ?>/invoices/add?client_id=<?php echo $client['id']; ?>">Add Invoice</a></li>
+            <li><a href="<?php echo BASE_URL; ?>/invoices/add/<?php echo $client['id']; ?>">Add Invoice</a></li>
         </ul>
     </div>
 </div>
+<?php
+if(!empty($client['body'])) {
+?>
 <label>Body:</label>
 <p><?php echo $client['body'];?></p>
+<?php } ?>
 
+<?php
+if($invoices->count() > 0) {
+?>
+<h3>Invoices</h3>
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <thead>
@@ -44,3 +52,4 @@
         </tbody>
     </table>
 </div>
+<?php } ?>

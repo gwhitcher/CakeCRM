@@ -1,6 +1,9 @@
 <div class="row">
-    <div class="col-md-11">
-        <h1 class="page-header">Invoice: #<?php echo $invoice['id']; ?> for <?php echo $client['title']; ?></h1>
+    <div class="col-md-6">
+        <h1 class="page-header"> <?php echo $client['title']; ?></h1>
+    </div>
+    <div class="col-md-5">
+        <h1 class="page-header pull-right">Invoice #<?php echo $invoice['id']; ?></h1>
     </div>
     <div class="col-md-1 cog-list">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
@@ -50,16 +53,18 @@
         <tbody>
         <?php
         $total_array = array();
+        $invoice_id = 1;
         foreach($invoiceitems as $invoiceitem) {
             $total_array[] = $invoiceitem['time_billed'] * $invoiceitem['time_rate'];
             echo '<tr>';
-            echo '<td>'.$invoiceitem['id'].'</td>';
-            echo '<td>'.$invoiceitem['body'].'</td>';
+            echo '<td>'.$invoice_id.'</td>';
+            echo '<td>'.nl2br($invoiceitem['body']).'</td>';
             echo '<td>'.$invoiceitem['time_billed'].'</td>';
             echo '<td>$'.$invoiceitem['time_rate'].'</td>';
             echo '<td><a class="btn btn-warning" href="'.BASE_URL.'/invoiceitems/edit/'.$invoiceitem['id'].'">Edit</a></td>';
             echo '<td><a class="delete btn btn-danger" href="'.BASE_URL.'/invoiceitems/delete/'.$invoiceitem['id'].'">Delete</a></td>';
             echo '</tr>';
+            $invoice_id++;
         }
         $total = 0;
         foreach($total_array as $total_item) {
@@ -77,4 +82,11 @@
         </tbody>
     </table>
 </div>
+
+<?php
+if(!empty($invoice['notes'])) {
+    echo '<strong>Notes:</strong> '.$invoice['notes'];
+}
+?>
+
 <p>Generated: <?php echo $invoice['i_date']; ?></p>
