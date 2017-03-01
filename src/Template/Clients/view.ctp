@@ -5,6 +5,7 @@
     <div class="col-md-2 cog-list">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
         <ul class="dropdown-menu">
+            <li><a href="<?php echo BASE_URL; ?>/clients/edit/<?php echo $client['id']; ?>">Edit Client</a></li>
             <li><a href="<?php echo BASE_URL; ?>/invoices/add/<?php echo $client['id']; ?>">Add Invoice</a></li>
         </ul>
     </div>

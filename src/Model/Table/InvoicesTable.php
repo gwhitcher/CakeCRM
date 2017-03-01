@@ -11,6 +11,9 @@ class InvoicesTable extends Table
         $this->belongsTo('clients', [
             'foreignKey' => 'client_id'
         ]);
+        $this->hasMany('invoice_items', [
+            'foreignKey' => 'invoice_id'
+        ]);
     }
 
 }

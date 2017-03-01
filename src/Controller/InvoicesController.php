@@ -246,4 +246,30 @@ class InvoicesController extends AppController {
             return $this->redirect(['action' => 'index']);
         }
     }
+
+    public function taxes() {
+        $this->loadModel('Invoices');
+        $this->set('title_for_layout', 'Taxes');
+        if ($this->request->is(['post', 'put'])) {
+            $start_date_year = $this->request->data['start_date']['year'];
+            $start_date_month = $this->request->data['start_date']['month'];
+            $start_date_day = $this->request->data['start_date']['day'];
+            $end_date_year = $this->request->data['end_date']['year'];
+            $end_date_month = $this->request->data['end_date']['month'];
+            $end_date_day = $this->request->data['end_date']['day'];
+            //$start_date = new \DateTime('2014-01-01');
+            //$end_date = new \DateTime('2017-12-31');
+            $start_time = strtotime($start_date_month.'/'.$start_date_day.'/'.$start_date_year);
+            $start_date_format = date('Y-m-d',$start_time);
+            $end_time = strtotime($end_date_month.'/'.$end_date_day.'/'.$end_date_year);
+            $end_date_format = date('Y-m-d',$end_time);
+            $invoices = $this->Invoices->find('all')->where([
+                'i_date BETWEEN :start AND :end'
+            ])
+                ->bind(':start', $start_date_format, 'date')
+                ->bind(':end',   $end_date_format, 'date')
+                ->contain(['clients','invoice_items']);
+            $this->set('invoices', $invoices);
+        }
+    }
 }
