@@ -67,7 +67,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo BASE_URL; ?>/clients">Clients</a></li>
                         <li><a href="<?php echo BASE_URL; ?>/invoices">Invoices</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>/taxes">Taxes</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>/invoices/taxes">Taxes</a></li>
                         <li><a class="confirm" href="<?php echo BASE_URL; ?>/update">Update</a></li>
                     </ul>
                 </li>
