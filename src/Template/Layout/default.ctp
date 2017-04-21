@@ -83,10 +83,36 @@
     </div>
 </nav>
 
+<div class="advertisement">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Responsive -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1862231357641748"
+         data-ad-slot="1935611714"
+         data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
 <div class="container" role="main">
     <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
 </div> <!-- /container -->
+
+<div class="advertisement">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Responsive -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1862231357641748"
+         data-ad-slot="1935611714"
+         data-ad-format="auto"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
 
 <!-- Bootstrap -->
 <?= $this->Html->script('/resources/bootstrap/js/bootstrap.min.js'); ?>

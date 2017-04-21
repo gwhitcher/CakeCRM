@@ -46,3 +46,9 @@ body {
     font-size: 30px;
     margin-top: 30px;
 }
+
+/* ADS */
+.advertisement {
+    text-align: center;
+    margin: 10px;
+}
