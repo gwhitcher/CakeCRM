@@ -46,6 +46,7 @@
             <th>Description</th>
             <th>Time</th>
             <th>Rate</th>
+            <th>Total</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -56,11 +57,13 @@
         $invoice_id = 1;
         foreach($invoiceitems as $invoiceitem) {
             $total_array[] = $invoiceitem['time_billed'] * $invoiceitem['time_rate'];
+            $total_rate = $invoiceitem['time_billed'] * $invoiceitem['time_rate'];
             echo '<tr>';
             echo '<td>'.$invoice_id.'</td>';
             echo '<td>'.nl2br($invoiceitem['body']).'</td>';
             echo '<td>'.$invoiceitem['time_billed'].'</td>';
             echo '<td>$'.$invoiceitem['time_rate'].'</td>';
+            echo '<td>$'.$total_rate.'</td>';
             echo '<td><a class="btn btn-warning" href="'.BASE_URL.'/invoiceitems/edit/'.$invoiceitem['id'].'">Edit</a></td>';
             echo '<td><a class="delete btn btn-danger" href="'.BASE_URL.'/invoiceitems/delete/'.$invoiceitem['id'].'">Delete</a></td>';
             echo '</tr>';
@@ -71,6 +74,7 @@
             $total += $total_item;
         }
         echo '<tr>';
+        echo '<td> </td>';
         echo '<td> </td>';
         echo '<td> </td>';
         echo '<td> </td>';

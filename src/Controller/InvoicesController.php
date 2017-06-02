@@ -206,11 +206,13 @@ class InvoicesController extends AppController {
         $invoice_id = 1;
         foreach($invoiceitems as $invoiceitem) {
             $total_array[] = $invoiceitem['time_billed'] * $invoiceitem['time_rate'];
+            $total_rate = $invoiceitem['time_billed'] * $invoiceitem['time_rate'];
             $display .= '<tr>';
             $display .= '<td valign="top">'.$invoice_id.'</td>';
             $display .= '<td valign="top">'.nl2br($invoiceitem['body']).'</td>';
             $display .= '<td valign="top" align="center">'.$invoiceitem['time_billed'].'</td>';
             $display .= '<td valign="top" align="center">$'.$invoiceitem['time_rate'].'</td>';
+            $display .= '<td valign="top" align="center">$'.$total_rate.'</td>';
             $display .= '</tr>';
             $invoice_id++;
         }
@@ -219,6 +221,7 @@ class InvoicesController extends AppController {
             $total += $total_item;
         }
         $display .= '<tr>';
+        $display .= '<td> </td>';
         $display .= '<td> </td>';
         $display .= '<td> </td>';
         $display .= '<td> </td>';
